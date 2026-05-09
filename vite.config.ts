@@ -10,7 +10,13 @@ export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
-    ui(),
+    ui({
+      theme: {
+        defaultVariants: {
+          color: 'neutral',
+        },
+      },
+    }),
   ],
   resolve: {
     alias: {
