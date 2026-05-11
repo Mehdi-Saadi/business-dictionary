@@ -25,7 +25,7 @@ const sample: Phrase = {
 
 const phrases: Phrase[] = []
 
-for (let i = 0; i < 100; i++)
+for (let i = 0; i < 99; i++)
   phrases.push(sample)
 
 const search = ref<string | null>(null)
