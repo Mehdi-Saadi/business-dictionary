@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 
 interface Phrase {
   word: string
@@ -30,6 +30,15 @@ for (let i = 0; i < 100; i++)
 
 const search = ref<string | null>(null)
 const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().includes(search.value?.toLowerCase() || '')))
+
+const selectedPhrase = ref<Phrase | null>(null)
+const openDetails = ref(false)
+
+async function handleItemClick(selected: Phrase) {
+  selectedPhrase.value = selected
+  await nextTick()
+  openDetails.value = true
+}
 </script>
 
 <template>
@@ -51,18 +60,31 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
 
       <!-- items -->
       <div class="flex flex-col max-w-md w-full space-y-5 pt-43 pb-10 px-5">
-        <UModal
+        <UButton
           v-for="(phrase, i) in filteredPhrases"
           :key="i"
-        >
-          <UButton
-            :label="phrase.word"
-            size="xl"
-            variant="subtle"
-          />
+          :label="phrase.word"
+          size="xl"
+          variant="subtle"
+          @click="handleItemClick(phrase)"
+        />
 
-          <template #title>
-            {{ phrase.word }}
+        <UModal
+          v-model:open="openDetails"
+          :ui="{ header: 'justify-between' }"
+        >
+          <template #header>
+            <div class="text-highlighted font-semibold">
+              {{ selectedPhrase?.word || '-' }}
+            </div>
+
+            <UButton
+              class="justify-center size-8"
+              size="md"
+              variant="ghost"
+              label="X"
+              @click="openDetails = false"
+            />
           </template>
 
           <template #body>
@@ -75,7 +97,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                   مخفف:
                 </div>
                 <p dir="ltr">
-                  {{ phrase.abbreviation || '-' }}
+                  {{ selectedPhrase?.abbreviation || '-' }}
                 </p>
               </UCard>
 
@@ -84,7 +106,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                   تعریف انگلیسی:
                 </div>
                 <p dir="ltr">
-                  {{ phrase.english_definition || '-' }}
+                  {{ selectedPhrase?.english_definition || '-' }}
                 </p>
               </UCard>
 
@@ -92,7 +114,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                 <div class="mb-2 text-sm">
                   معنی فارسی:
                 </div>
-                <p>{{ phrase.persian_meaning || '-' }}</p>
+                <p>{{ selectedPhrase?.persian_meaning || '-' }}</p>
               </UCard>
 
               <UCard variant="subtle">
@@ -100,7 +122,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                   مثال:
                 </div>
                 <p dir="ltr">
-                  {{ phrase.example || '-' }}
+                  {{ selectedPhrase?.example || '-' }}
                 </p>
               </UCard>
 
@@ -109,7 +131,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                   دسته بندی:
                 </div>
                 <p dir="ltr">
-                  {{ phrase.category || '-' }}
+                  {{ selectedPhrase?.category || '-' }}
                 </p>
               </UCard>
 
@@ -118,7 +140,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                   واژه های مرتبط:
                 </div>
                 <p dir="ltr">
-                  {{ phrase.related_terms || '-' }}
+                  {{ selectedPhrase?.related_terms || '-' }}
                 </p>
               </UCard>
 
@@ -126,7 +148,7 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
                 <div class="mb-2 text-sm">
                   توضیحات:
                 </div>
-                <p>{{ phrase.notes || '-' }}</p>
+                <p>{{ selectedPhrase?.notes || '-' }}</p>
               </UCard>
             </div>
           </template>
