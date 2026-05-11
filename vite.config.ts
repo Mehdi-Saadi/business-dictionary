@@ -16,6 +16,7 @@ export default defineConfig({
           color: 'neutral',
         },
       },
+      colorMode: false,
     }),
   ],
   resolve: {
