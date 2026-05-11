@@ -69,6 +69,19 @@ async function handleItemClick(selected: Phrase) {
           @click="handleItemClick(phrase)"
         />
 
+        <UCard
+          v-if="!filteredPhrases.length"
+          variant="ghost"
+        >
+          <div
+            class="text-center"
+            dir="rtl"
+          >
+            موردی یافت نشد...
+          </div>
+        </UCard>
+
+        <!-- details -->
         <UModal
           v-model:open="openDetails"
           :ui="{ header: 'justify-between' }"
