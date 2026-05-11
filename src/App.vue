@@ -34,8 +34,9 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
 
 <template>
   <UApp>
-    <div class="min-h-dvh min-h-screen w-full flex flex-col items-center justify-center py-10">
-      <div class="flex flex-col space-y-5 max-w-md w-full">
+    <div class="min-h-dvh min-h-screen w-full flex flex-col items-center">
+      <!-- fixed title and search -->
+      <div class="fixed top-0 left-1/2 -translate-x-1/2 max-w-md w-full bg-default flex flex-col space-y-5 pt-10 px-5 pb-5 border-b border-accented">
         <h1 class="text-center text-xl">
           لغتنامه بازرگانی بین الملل
         </h1>
@@ -46,15 +47,90 @@ const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().
           variant="subtle"
           placeholder="eg: Letter of Credit"
         />
+      </div>
 
-        <UButton
+      <!-- items -->
+      <div class="flex flex-col max-w-md w-full space-y-5 pt-43 pb-10 px-5">
+        <UModal
           v-for="(phrase, i) in filteredPhrases"
           :key="i"
-          :label="phrase.word"
-          size="xl"
-          variant="subtle"
-          class="cursor-pointer"
-        />
+        >
+          <UButton
+            :label="phrase.word"
+            size="xl"
+            variant="subtle"
+          />
+
+          <template #title>
+            {{ phrase.word }}
+          </template>
+
+          <template #body>
+            <div
+              class="space-y-4"
+              dir="rtl"
+            >
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  مخفف:
+                </div>
+                <p dir="ltr">
+                  {{ phrase.abbreviation || '-' }}
+                </p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  تعریف انگلیسی:
+                </div>
+                <p dir="ltr">
+                  {{ phrase.english_definition || '-' }}
+                </p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  معنی فارسی:
+                </div>
+                <p>{{ phrase.persian_meaning || '-' }}</p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  مثال:
+                </div>
+                <p dir="ltr">
+                  {{ phrase.example || '-' }}
+                </p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  دسته بندی:
+                </div>
+                <p dir="ltr">
+                  {{ phrase.category || '-' }}
+                </p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  واژه های مرتبط:
+                </div>
+                <p dir="ltr">
+                  {{ phrase.related_terms || '-' }}
+                </p>
+              </UCard>
+
+              <UCard variant="subtle">
+                <div class="mb-2 text-sm">
+                  توضیحات:
+                </div>
+                <p>{{ phrase.notes || '-' }}</p>
+              </UCard>
+            </div>
+          </template>
+        </UModal>
       </div>
     </div>
   </UApp>
