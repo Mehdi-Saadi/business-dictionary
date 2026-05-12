@@ -29,7 +29,7 @@ for (let i = 0; i < 99; i++)
   phrases.push(sample)
 
 const search = ref<string | null>(null)
-const filteredPhrases = computed(() => phrases.filter(p => p.word.toLowerCase().includes(search.value?.toLowerCase() || '')))
+const filteredPhrases = computed(() => phrases.filter(p => p.word.trim().toLowerCase().includes(search.value?.trim().toLowerCase() || '')))
 
 const selectedPhrase = ref<Phrase | null>(null)
 const openDetails = ref(false)
