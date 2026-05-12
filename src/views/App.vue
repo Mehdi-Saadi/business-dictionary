@@ -1,32 +1,11 @@
 <script setup lang="ts">
+import type { Phrase } from '@/types/phrase'
 import { computed, nextTick, ref } from 'vue'
+import part1 from '@/stores/part1'
 
-interface Phrase {
-  word: string
-  abbreviation?: string
-  english_definition: string
-  persian_meaning: string
-  example: string
-  category: string
-  related_terms: string
-  notes: string
-}
-
-const sample: Phrase = {
-  word: 'Letter of Credit',
-  abbreviation: 'L/C',
-  english_definition: 'A finantial instrument issued by a bank guaranteeing that a seller will receive payment from a buyyer, provided that the seller meets the specified terms and submits the required documents withing a set timeframe.',
-  persian_meaning: 'اعتبار اسنادی',
-  example: 'The exporter requested a letter of credit to reduce the risk of non-payment in the international transaction.',
-  category: 'International Trade / Trade Finance',
-  related_terms: 'Bill of lading - Documentary Collection - Bank Guarantee',
-  notes: 'اعتباری اسنادی برای کاهش ریسک بین طرفین بطور مداوم در مبادلات بین الملل مورد استفاده قرار میگیرد.',
-}
-
-const phrases: Phrase[] = []
-
-for (let i = 0; i < 99; i++)
-  phrases.push(sample)
+const phrases: Phrase[] = [
+  ...part1,
+]
 
 const search = ref<string | null>(null)
 const filteredPhrases = computed(() => phrases.filter(p => p.word.trim().toLowerCase().includes(search.value?.trim().toLowerCase() || '')))
