@@ -2,9 +2,11 @@
 import type { Phrase } from '@/types/phrase'
 import { computed, nextTick, ref } from 'vue'
 import part1 from '@/stores/part1'
+import part2 from '@/stores/part2'
 
 const phrases: Phrase[] = [
   ...part1,
+  ...part2,
 ]
 
 const search = ref<string | null>(null)
