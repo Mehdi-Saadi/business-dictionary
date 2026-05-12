@@ -15,7 +15,6 @@ jobs:
         env:
           CHABOKAN_TOKEN: ${{ secrets.CHABOKAN_TOKEN }}
         run: |
-          npm i -g bun
-          bun i -g @chabokan.net/cli
+          npm install -g @chabokan.net/cli
           chabok login -t $CHABOKAN_TOKEN
           chabok deploy -s business-dictionary
