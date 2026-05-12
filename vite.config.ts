@@ -18,8 +18,7 @@ export default defineConfig({
       },
       colorMode: false,
     }),
-    compression({ algorithm: 'gzip' }),
-    compression({ algorithm: 'brotliCompress' }),
+    compression(),
   ],
   resolve: {
     alias: {
