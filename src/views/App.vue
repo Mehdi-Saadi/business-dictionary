@@ -52,6 +52,7 @@ async function handleItemClick(selected: Phrase) {
         :label="phrase.word"
         size="xl"
         variant="subtle"
+        class="pt-3"
         @click="handleItemClick(phrase)"
       />
 
