@@ -5,12 +5,14 @@ import part1 from '@/stores/part1'
 import part2 from '@/stores/part2'
 import part3 from '@/stores/part3'
 import part4 from '@/stores/part4'
+import part6 from '@/stores/part6'
 
 const phrases: Phrase[] = [
   ...part1,
   ...part2,
   ...part3,
   ...part4,
+  ...part6,
 ]
 
 const search = ref<string | null>(null)
